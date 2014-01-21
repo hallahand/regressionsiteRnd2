@@ -1,0 +1,86 @@
+@(email:Email)
+
+
+@homeSkeleton	{
+<!DOCTYPE html>
+  <html>
+  <style>
+p
+{
+
+}
+p.padding
+{
+padding-top:25px;
+padding-bottom:25px;
+padding-right:50px;
+padding-left:50px;
+}
+</style>
+  <head>
+	<meta charset="utf-8">
+      <script type="text/javascript" src="@routes.Application.javascriptRoutes()"></script>
+      <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+      <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/bootstrap.min.css")">
+      <script type="text/javascript" src="@routes.Assets.at("js/jquery.chained.min.js")" charset="utf-8"></script>
+      <script type="text/javascript" src="@routes.Application.javascriptRoutes()"></script>
+   </head>
+   
+	<body>
+   	<div class="clearfix ">
+	<div class="input" margin:auto; floatwidth:70%; background-color:#b0e0e6;>
+	<center>
+	@{var str = "";
+   	
+   	if (email.format == "")
+   		str += "<h1>Email Reporting stopped for</h1>";
+   	else
+   		str += "<h1>Email Reporting started for</h1>";
+   	
+ 		str += "<br>";
+   		
+		str += "<h3 id='emailAddress'>"
+		str += email.address;
+		str += "</h3>";
+		str += "<h3 id='emailFormat'>";
+		str += email.format;
+		str += "</h3>";
+		Html(str);
+  	} 	
+   <form id="addressForm" action="./sendemailnow" method="post">
+ 		<input type="hidden" id="address" name="address" value="email.address">
+ 		<input type="hidden" id="format" name="format" value="email.format">
+   </form>
+   
+   @{var str = "";
+   	str = "<button type='button' class='btn primary' ";
+   	if (email.format=="")
+   		str += "onclick='home()'>Home";
+   	else
+   		str += "onclick='getEmailAddress()'>Send Email Now";
+   	str += "</button>";
+   	Html(str);
+   }
+   </center>
+   
+   <script>
+   function home()	{
+	   location.assign("/");
+   }
+   function getEmailAddress()	{
+	  var addr = $('#emailAddress').html();
+	  $('#address').val(addr);
+	  var fmt = $('#emailFormat').html();
+	  $('#format').val(fmt);
+	  var msg = "email address:" + $('#address').val() + "\n";
+	  msg +=    "format       :" + $('#format').val(); 
+	  alert(msg);
+	  $('#addressForm').submit();
+	  var debug;
+   }
+   </script>
+	</div>		
+	</div>		
+   	</body>
+   	</html>
+}

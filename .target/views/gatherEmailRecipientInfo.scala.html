@@ -1,0 +1,117 @@
+@homeSkeleton	{
+<!DOCTYPE html>
+  <html>
+  <style>
+p
+{
+
+}
+p.padding
+{
+padding-top:25px;
+padding-bottom:25px;
+padding-right:50px;
+padding-left:50px;
+}
+</style>
+  <head>
+      <meta charset="utf-8">
+      <script type="text/javascript" src="@routes.Application.javascriptRoutes()"></script>
+      <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+      <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/bootstrap.min.css")">
+      <script type="text/javascript" src="@routes.Assets.at("js/jquery.chained.min.js")" charset="utf-8"></script>
+      <script type="text/javascript" src="@routes.Application.javascriptRoutes()"></script>
+   </head>
+   
+   <body>
+   	<center>
+   	<h1>Add an Email Report</h1>
+ 	<br>
+   	
+   	  	<div class="clearfix ">
+		<div class="input" margin:auto; floatwidth:70%; background-color:#b0e0e6;>
+
+			@{var i = 0;				
+			var str = "";
+			val ffList : List[FileFormat] = FileFormat.getList();
+			str = "<div Id='formatDiv'>"
+			str = "<span>";
+			while(i < ffList.length)	{
+				str += "<input type=";
+				str += "checkbox";
+				str += " onchange=\'readFormats()\' ";
+				str += " value = ";
+				str += ffList(i).getFileFormatName();
+				str += ">";
+				str += "\t" + ffList(i).getFileFormatName() + "\t";
+				str += "</input>";
+					
+				i+=1;
+				if(i % 3 == 0)	{
+					str += "</span>";
+					str += "<br>";
+					str += "<span>";
+				}
+
+				}
+				if(i % 3 != 0)	{
+					str += "</span>";					
+			}
+			str += "</div>";
+			Html(str)
+			}
+				
+			</div>
+		</div>
+		<button type='button' id='selectAllBtn' class="btn primary" onclick='selectAllFormats()'>select all</button>    
+
+   	<!-- ignoring the checkboxes for now -->
+   	<form action="@routes.Application.addEmailRecipient()" method="post">
+   		<input type="hidden" name="format" id="format">
+   		<br>
+   		<input name="address"> email address
+   		<br><br>
+   		<input type="submit" class="btn primary" value="Submit Request">
+   	</form>
+   	
+   	</center>
+   	
+   	<script>
+	function readFormats()	{
+  		var formats = "";
+  		$('input:checked').each(function(){formats += this.value + ", "});	
+  		formats = formats.slice(0, -2);
+  		
+  		var msg = "sendEmail(): the following formats have been chosen:\n";
+  		msg += formats + "\n";
+  		msg += $('#emailAddress').val();
+  		//alert(msg);
+  		
+  		var formatTextBox = document.getElementById("format");
+  		formatTextBox.value = formats;
+  		var debug;
+  		
+  	}
+	function selectAllFormats()	{
+		
+		var buttonText = $('#selectAllBtn').html();
+		
+		if (buttonText === "select all")	{
+			$('input:checkbox').prop('checked', false);
+			$('input:checkbox').prop('checked', true);
+			$('#selectAllBtn').html('deselect all');
+		}
+		else{
+			$('input:checkbox').prop('checked', true);
+			$('input:checkbox').prop('checked', false);
+			$('#selectAllBtn').html('select all');
+		}
+					
+		readFormats();
+
+		var debug;
+	}
+  </script>
+   </body>
+   </html>
+}

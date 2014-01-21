@@ -1,0 +1,66 @@
+@(runs:List[Run])
+
+@homeSkeleton{
+<!DOCTYPE html>
+  <html>
+  <style>
+p
+{
+
+}
+p.padding
+{
+padding-top:25px;
+padding-bottom:25px;
+padding-right:50px;
+padding-left:50px;
+}
+h1, h2, h3, h4, h5, h6	{
+	text-align: center;
+}
+</style>
+<head>
+	<meta charset="utf-8">
+   <script type="text/javascript" src="@routes.Application.javascriptRoutes()"></script>
+   <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+   <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/bootstrap.min.css")">
+   <script type="text/javascript" src="@routes.Assets.at("js/jquery.chained.min.js")" charset="utf-8"></script>
+   <script type="text/javascript" src="@routes.Application.javascriptRoutes()"></script>
+</head>  
+
+<body>   
+
+   <h1>Email Reporting</h1>
+   <br> 	
+  	<select id='selectedRuns' size=25 multiple required>
+		@for(run <- runs)	{
+  		<option value=@run.name>@run.name</option>
+  		}
+  	</select>
+   <input type = "button" id = "submitRequest" value= "Submit Request" class="btn primary"
+ 		onclick = "submitRequest()"/>
+ 
+ 
+  	
+   <form id="reportingForm" action="./createemailreport" method="post">
+		<input type="hidden" id="runSelection" name="runSelection" value="not set">
+ 	</form>
+ </body>
+
+<script>
+function submitRequest()	{
+	//read the runs dropdown
+	var selected = $('#selectedRuns :selected');
+	
+	var runs = "";
+	for(var i = 0; i < selected.length; i++)	{
+		runs += selected[i].text + ", ";
+	}
+	runs = runs.slice(0, runs.length-2);
+	alert(runs);
+	$('#runSelection').val(runs);
+	
+	$('#reportingForm').submit();
+}
+</script>
+}
