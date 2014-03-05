@@ -140,3 +140,9 @@ clean
 compile
 clean
 compile
+play clean
+clean
+compile
+debug
+debug run
+exit

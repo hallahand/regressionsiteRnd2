@@ -121,5 +121,7 @@
 	<classpathentry kind="lib" path="C:/play/play-2.1.5/repository/local/org.easytesting/fest-util/1.1.6/jars/fest-util.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="C:/play/play-2.1.5/framework/sbt/boot/scala-2.10.0/lib/scala-library.jar"/>
+	<classpathentry kind="lib" path="C:/Users/dhallahan/workspace/regressionsiteRnd2-1/eclipse-regressionsite/lib/play-plugins-mailer_2.10-2.1-RC2.jar"/>
+	<classpathentry kind="lib" path="lib"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

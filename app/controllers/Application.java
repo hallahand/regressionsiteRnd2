@@ -10,21 +10,11 @@ import views.html.*;
 import play.api.templates.Html;
 //For forms
 import play.data.*;
-import play.data.Form.*;
 //Get objects
 import models.*;
 
-//for testing/file
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Writer;
-import java.util.*;
-
 // For excel file
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -34,8 +24,6 @@ import org.apache.poi.ss.usermodel.Workbook;
 import java.io.FileOutputStream;
 
 import com.typesafe.plugin.*;
-
-import java.util.ResourceBundle;
 
 public class Application extends Controller  {
 	/**
@@ -527,7 +515,7 @@ public static String createData(){
 	public static Result sendEmailReportNow()	{
 		Form<Email> emailForm = Form.form(Email.class);
 		Email email = emailForm.bindFromRequest().get();
-//		stageEmail(email.address);
+		stageEmail(email);
 		return ok(
 				overview.render()
 				);
@@ -536,23 +524,25 @@ public static String createData(){
 	 *  helper method for sending email
 	 *  params: String: 'all' or 'email address'
 	 */
-/*
-	public static void stageEmail(String toWhom)	{
+
+	public static void stageEmail(Email email)	{
 		
+		String toWhom = email.address;
+		String report = "report data for  " + email.format;
 		if (!toWhom.equals(""))	{
 			if (toWhom.equalsIgnoreCase("all"))	{
 				List<Email> emails = Email.getAllEmails();
 				for (Email em : emails)	{
-					sendEmail(em);
+					sendEmail(em, report);
 				}			
 			}
 			else	{
 				Email em = Email.getEmailFromAddress(toWhom);
-				sendEmail(em);
+				sendEmail(em, report);
 			}
 		}
 	}
-*/
+
 	/**
 	 * Starting point for sending an email, called from routes
 	 * probably should have an email parameter
